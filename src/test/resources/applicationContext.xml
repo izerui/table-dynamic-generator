@@ -61,13 +61,15 @@
     </bean>
 
     <tx:annotation-driven/>
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="dataSource" ref="dataSource" />
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
     <!-- Hibernate配置 -->
     <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="mappingLocations">
             <list>
