@@ -79,7 +79,7 @@ public class TestTable {
 
     public Table createTable(){
         Column column1 = new Column("id");
-        column1.setSqlType(dialect.getTypeName(Types.INTEGER,100l,0,0));
+        column1.setSqlType(dialect.getTypeName(Types.INTEGER, 100l, 0, 0));
         column1.setNullable(false);
         column1.setUnique(true);
         Column column2 = new Column("name");
@@ -134,8 +134,11 @@ public class TestTable {
 
         Column column = new Column("MEMO_TEST");
         column.setSqlType(dialect.getTypeName(Types.DATE));
+        Column column1 = new Column("title");
+        column1.setSqlType(dialect.getTypeName(Types.NVARCHAR,200,0,0));
 
         table.addColumn(column);
+        table.addColumn(column1);
 
         Iterator<String> iterator = table.sqlAlterStrings(dialect, null, tableMetadata, null, null);
 

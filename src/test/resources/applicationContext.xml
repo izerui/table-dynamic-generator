@@ -60,10 +60,9 @@
         </property>
     </bean>
 
-    <tx:annotation-driven/>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="dataSource" ref="dataSource" />
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
@@ -71,24 +70,15 @@
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="mappingLocations">
-            <list>
-            </list>
-        </property>
+        <property name="packagesToScan" value="com.myfeike.dbtools"/>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</prop>
-                <prop key="hibernate.hbm2ddl.auto">false</prop>
+                <prop key="hibernate.dialect">${database.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.query.substitutions">true 1, false 0</prop>
-                <prop key="hibernate.default_batch_fetch_size">16</prop>
-                <prop key="hibernate.max_fetch_depth">2</prop>
-                <prop key="hibernate.generate_statistics">true</prop>
-                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
-                <prop key="hibernate.current_session_context_class">thread</prop>
             </props>
         </property>
     </bean>
+
 
 </beans>
