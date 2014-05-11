@@ -5,7 +5,6 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.MySQLDialect;
 import org.hibernate.mapping.Column;
 import org.hibernate.mapping.PrimaryKey;
-import org.hibernate.mapping.SimpleValue;
 import org.hibernate.mapping.Table;
 import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
 import org.hibernate.tool.hbm2ddl.SchemaUpdateScript;
@@ -83,9 +82,6 @@ public class TestTable {
         column1.setSqlType(dialect.getTypeName(Types.INTEGER,100l,0,0));
         column1.setNullable(false);
         column1.setUnique(true);
-        SimpleValue value = new SimpleValue(null);
-        value.createForeignKey();
-        column1.setValue(value);
         Column column2 = new Column("name");
         column2.setLength(500);
         column2.setSqlType(dialect.getTypeName(Types.NVARCHAR,500l,0,0));
