@@ -1,5 +1,7 @@
 import junit.framework.Assert;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.MySQLDialect;
@@ -9,10 +11,12 @@ import org.hibernate.mapping.Table;
 import org.hibernate.tool.hbm2ddl.DatabaseMetadata;
 import org.hibernate.tool.hbm2ddl.SchemaUpdateScript;
 import org.hibernate.tool.hbm2ddl.TableMetadata;
+import org.hibernate.transform.Transformers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -153,4 +157,33 @@ public class TestTable {
 
 
     }
+
+    @Test
+    public void testList(){
+
+//        ((SessionFactoryImpl)sessionFactory)
+
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery = session.createSQLQuery("select * from test_my_table111");
+//        sqlQuery.addEntity("test_my_table111",TestTable.class);
+        sqlQuery.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+        List list = sqlQuery.list();
+        System.out.println(list.toString());
+    }
+
+    @Test
+    @Rollback(value = false)
+    public void testInsert(){
+        Session session = sessionFactory.getCurrentSession();
+//        Map<String,Object> map = new HashMap<String, Object>();
+//        map.put("id",4);
+//        map.put("name","名称");
+//        map.put("MEMO_TEST",new Date());
+//        map.put("title","的飞为我");
+//        session.saveOrUpdate("test",map);
+
+        session.createSQLQuery("insert into test(id,name,MEMO_test,title) values (34,'djf',now(),'title地方')").executeUpdate();
+    }
+
+
 }
